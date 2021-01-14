@@ -1,0 +1,32 @@
+1. 爬蟲儲存多個網頁
+
+2. 自動生成每個網頁的破板模式
+
+3. 使用自動化產生不同scaling和平台上的網頁截圖
+
+4. 使用LabelImg工具標註樣本, 嘗試自動化產生所有標籤
+
+5. 將網頁圖片和標籤資料存製模型資料夾, 開始訓練
+
+6. 模型訓練
+
+7. 在驗證資料集上驗證效能, 產生result.json
+
+8. 使用result.json標註驗證資料, 觀看驗證結果
+
+
+爬蟲抓取10個分頁: save_webpage.py 
+自動調整網頁破版樣式: modify_defect.py  
+產生不同scaling下的破版樣本: gen_diff_scale.py
+手動標籤樣本: labelImg.py
+複製模型標籤: copy_label  輸入: label_path
+圖片預處理: process_image.py 輸入: --img_path image path --save_path save_image_path
+產生yolo訓練用 train.txt 檔: gen_data_path.py --img_path image_path --txt_path train.txt_path 
+測試樣本標籤效果: test_label.py 輸入: test_label.py --img_path image_path_directory
+
+
+模型訓練流程:
+
+1. 上方bar換行
+2. 文字和文字重疊
+3. 圖片超出範圍
