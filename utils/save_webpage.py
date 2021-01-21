@@ -21,20 +21,25 @@ import pyautogui
 
 save_path = 'D:/project/web_layout_defect/defect_detect/data_generate/hamastar/text_next_row/validate_web_hamastar'
 
-
-def save_webpage(name):
+k = 0
+def save_webpage(name, k):
     # type on keyboard to download whole webpage
     # name: the webpage.html name to save
     pyautogui.keyDown('ctrl')
     pyautogui.press('s')
     pyautogui.keyUp('ctrl')
-    time.sleep(3)
+    time.sleep(2)
 
-    pyautogui.hotkey('ctrl', 'space') # change to english input
+    #pyautogui.hotkey('ctrl' + 'space') # change to english input
+  
     time.sleep(1)
+       
+    k += 1
 
     pyautogui.typewrite(name)
     pyautogui.press('enter')
+    
+    return k
 
 '''
 # These webpages for training
@@ -375,6 +380,7 @@ driver.quit()
 '''
 
 
+# Wait for timeout seconds until the webpages is saved
 def download_wait(download_directory, timeout, nfiles = None):
     seconds = 0
     dl_wait = True
@@ -399,7 +405,7 @@ def download_wait(download_directory, timeout, nfiles = None):
 
 
 #Pindong
-url = 'D:/project/web_layout_defect/defect_detect/data_generate/pindong/屏東縣政府全球資訊網.html' # parent webpage to navigate to more pages
+url = 'https://www.miaoli.gov.tw/' # parent webpage to navigate to more pages
 save_path = 'C:/Users/lawrence123/downloads'
 driver_path = 'D:/project/web_layout_defect/defect_detect/data_generate/chromedriver.exe'
 driver = webdriver.Chrome(executable_path = driver_path)
@@ -410,31 +416,34 @@ time.sleep(3)
 
 links = driver.find_elements_by_xpath('//a[@href]')
 links = [elem.get_attribute('href') for elem in links]
-links = [web for web in links if web.startswith('https://www.pthg.gov.tw/')] # Don't get the popup links
+links = [web for web in links if web.startswith('https://www.miaoli.gov.tw/')] # Don't get the popup links, get the web links that have same website name
+links = list(set(links))
 
 print('Total links: ', len(links))
 
 print('Start web scraping!')
 
-n_pages = 50
+
+n_pages = 30
 page_count = 0
-for i in range(35, n_pages):
+for i in range(n_pages):
     
     try:
+      print('Get link: ', links[i])
       driver.get(links[i])
       time.sleep(3)
       page_count += 1
     
-      print('Save page:', str(page_count) + '.html')
-      save_webpage('{}.html'.format(i))
-      download_wait(save_path, 10, n_pages)
+      print('Save page:', str(i) + '.html')
+      k = save_webpage('{}.html'.format(i), k)
+      download_wait(save_path, 8, n_pages)
     
     except Exception as err:
       print('Exception error: ', err)
       print('Exception at {} pages'.format(page_count))
       break
 
-driver.quit()
+#driver.quit()
 
 
 

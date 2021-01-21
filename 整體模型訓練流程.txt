@@ -15,6 +15,10 @@
 8. 使用result.json標註驗證資料, 觀看驗證結果
 
 
+為了各程式運行方便, 統一圖片名稱格式:
+1.html_600_edge_ham.png
+
+
 爬蟲抓取10個分頁: save_webpage.py 
 自動調整網頁破版樣式: modify_defect.py  
 產生不同scaling下的破版樣本: gen_diff_scale.py
@@ -23,7 +27,9 @@
 圖片預處理: process_image.py 輸入: --img_path image path --save_path save_image_path
 產生yolo訓練用 train.txt 檔: gen_data_path.py --img_path image_path --txt_path train.txt_path 
 測試樣本標籤效果: test_label.py 輸入: test_label.py --img_path image_path_directory
-
+刪除labelImg最後的空白: python del_space.py --label_path label_directory
+將幾個image用label標示並顯示結果: test_some_img.py
+刪除資料夾內所有label: python remove_label.py --label_path label_directory
 
 模型訓練流程:
 

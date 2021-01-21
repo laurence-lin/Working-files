@@ -15,15 +15,15 @@ For the generated webpage with defect layout, create different scale: browser, b
 '''
 
 # Custom argument: how to automatic set up argument?
-data_path = 'D:/project/web_layout_defect/defect_detect/data_generate/jiayi' # directory of webpage files
-save_path = 'D:/project/web_layout_defect/defect_detect/data_generate/jiayi/txt_next_row'  # directory of folder to save webpage screenshot
+data_path = 'D:/project/web_layout_defect/defect_detect/data_generate/miaoli/txt_next_row' # directory of webpage files
+save_path = 'D:/project/web_layout_defect/defect_detect/data_generate/miaoli/txt_next_row/image'  # directory of folder to save webpage screenshot
 
 driver_path = 'D:/project/web_layout_defect/defect_detect/data_generate'   # directory of driver files
 
 web_files = [(data_path + '/' + file) for file in os.listdir(data_path) if file.endswith('.html')]
 
 # For next line defect, width should smaller than 768px
-size = [800, 750, 600, 550]   # different width of screenshot
+size = [650, 580, 450]   # different width of screenshot
 height = 700       # height of screenshot
    
 
@@ -53,14 +53,20 @@ for driver_type in driver_list:
      driver.get(web)
      driver.set_window_size(size[0], height)
      time.sleep(3)
+     #driver.execute_script('window.scrollTo(0, 100)')
+     time.sleep(1)
      driver.get_screenshot_as_file(os.path.join(save_path, f'{save_name}_{size[0]}_{driver_type}.png'))
 
      driver.set_window_size(size[1], height)
      time.sleep(3)
+     #driver.execute_script('window.scrollTo(0, 100)')
+     time.sleep(1)
      driver.get_screenshot_as_file(os.path.join(save_path, f'{save_name}_{size[1]}_{driver_type}.png'))
 
      driver.set_window_size(size[2], height)
      time.sleep(3)
+     #driver.execute_script('window.scrollTo(0, 100)')
+     time.sleep(1)
      driver.get_screenshot_as_file(os.path.join(save_path, f'{save_name}_{size[2]}_{driver_type}.png'))
 
   driver.quit()

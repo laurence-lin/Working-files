@@ -30,32 +30,37 @@ path = kwargs.get('img_path', '')
 
 # Test the auto-create label is valid
 image_list = [file for file in os.listdir(path) if file.endswith('.png')]
-image_list = [os.path.join(path, file) for file in image_list if file.split('_')[1] == '600']
+image_list = [os.path.join(path, file) for file in image_list if file.split('_')[1] == '500']
 label_list = [os.path.join(path, file.split('.png')[0] + '.txt') for file in image_list]
 
 
 for i in range(len(image_list)):
+    
+    if i > 19:
+        break
 
     img = image_list[i]
     label = label_list[i]
 
     label = open(label, 'r')
-    data = label.readlines()
+    lines = label.readlines()
     label.close()
-    _, x, y, w, h = map(float, data[0].split(' '))
-
+    
     img = plt.imread(img)
     dh, dw, _ = img.shape
-   
-    l = int((x - w/2)*dw)
-    r = int((x + w/2)*dw)
-    t = int((y - h/2)*dh)
-    b = int((y + h/2)*dh)
+    
+    for data in lines:
+      _, x, y, w, h = map(float, data.split(' '))
 
-    cv2.rectangle(img, (l, t), (r, b), (255, 0, 0), 1)
+      l = int((x - w/2)*dw)
+      r = int((x + w/2)*dw)
+      t = int((y - h/2)*dh)
+      b = int((y + h/2)*dh)
 
-   
-    plt.subplot(3, 10, i+1)
+      cv2.rectangle(img, (l, t), (r, b), (255, 0, 0), 1)
+
+    
+    plt.subplot(4, 5, i+1)
     plt.imshow(img)
 
 

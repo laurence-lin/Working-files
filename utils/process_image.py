@@ -25,23 +25,7 @@ kwargs, args = vars(parsed[0]), parsed[1] # non pair argument will go into args
 # so now you can do
 img_path = kwargs.get('img_path', '')
 save_path = kwargs.get('save_path', '')
-'''
-arg_list = sys.argv[1:] # get all arguments except the .py file itself
-try:
-    arguments, left_arg = getopt.getopt(arg_list, 'i:s', ['img_path=', 'save_path='])
 
-    for opt, arg_value in arguments:
-        
-        if opt in ('-i', '--img_path'):
-            img_path = arg_value
-            
-        if opt in ('-s', '--save_path'):
-            save_path = arg_value
-    
-except getopt.error as err:
-    print(str(err))
-    
-'''
 
 img_list = os.listdir(img_path)
 img_list = [file for file in img_list if file.endswith('.png')]
@@ -74,6 +58,10 @@ def binarize(img):
     
     
     return edge
+
+def blur(img):
+    
+    return cv2.GaussianBlur(img, (3, 3), 0)
     
 
 
@@ -82,6 +70,7 @@ for i in img_list:
     img = Image.open(os.path.join(img_path, i))
     img = transform_size(img)
     img = binarize(img)
+    img = blur(img)
     
     img = Image.fromarray(np.uint8(cm.gist_earth(img)*255))
 
